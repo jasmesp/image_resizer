@@ -1,11 +1,11 @@
-import PIL
 import os
+
 from PIL import Image
 
 imgs_dir = './imgs'
 imgs_out_dir = './imgs_out'
 
-os.listdir(imgs_dir)
+#os.listdir(imgs_dir)
 
 for file in os.listdir(imgs_dir):
     if file.endswith(".jpg") or file.endswith(".png") or file.endswith(".jpeg") or file.endswith(".JPG"):
