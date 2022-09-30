@@ -2,7 +2,7 @@ import os
 import time
 from PIL import Image
 
-
+#get out gooey package
 def make_thumbnail_dir():
     root_output_dir = './imgs_out'
     make_thumbnail_dir = '/thumbnail'
