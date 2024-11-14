@@ -1,50 +1,41 @@
 import os
+from pathlib import Path
 
 from PIL import Image
 
 
 def make_thumbnail_dir():
-    root_output_dir = "./imgs_out/"
-    thumbnail_dir = "/thumbnail"
-    thumbnail_path = root_output_dir + thumbnail_dir + "/"
+    root_output_dir = Path("./imgs_out/")
+    thumbnail_dir = root_output_dir / "thumbnail"
 
-    try:
-        if not os.path.exists(root_output_dir):
-            os.mkdir(root_output_dir)
-
-        os.mkdir(thumbnail_path)
-    except FileExistsError:
-        pass
-
-    return thumbnail_path
+    root_output_dir.mkdir(exist_ok=True)
+    thumbnail_dir.mkdir(exist_ok=True)
+    return thumbnail_dir
 
 
 def homogenize_filenames():
-    import os
+    imgs_dir = Path("./imgs")
 
-    imgs_dir = "./imgs"
-
-    for file in os.listdir(imgs_dir):
-        if file.upper().endswith((".JPG", ".JPEG", ".PNG")):
-            os.rename(
-                os.path.join(imgs_dir, file), os.path.join(imgs_dir, file.lower())
-            )
+    for file in imgs_dir.iterdir():
+        if file.suffix.upper() in [".JPG", ".JPEG", ".PNG"]:
+            file.rename(file.with_suffix(file.suffix.lower()))
 
 
-imgs_dir = "./imgs"
+imgs_dir = Path("./imgs")
 imgs_out_dir = make_thumbnail_dir()
 
 # os.listdir(imgs_dir)
 homogenize_filenames()
-for file in os.listdir(imgs_dir):
-    if file.lower().endswith((".jpg", ".jpeg", ".png")):
-        img = Image.open(imgs_dir + "/" + file)
+for file in imgs_dir.iterdir():
+    if file.suffix.lower() in [".jpg", ".jpeg", ".png"]:
+        img = Image.open(file)
         output_width = 300
         width_percentage = output_width / float(img.size[0])
         output_height = int((float(img.size[1]) * float(width_percentage)))
         img = img.resize((output_width, output_height))
-        img.save(imgs_out_dir + "thumb_" + file.lower())
-        print(file)
+        output_path = imgs_out_dir / f"thumb_{file.name.lower()}"
+        img.save(output_path)
+        print(file.name)
     else:
         print("Not a jpg")
         continue
