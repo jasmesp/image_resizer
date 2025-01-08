@@ -3,3 +3,8 @@ uv = "latest"
 zig = "ref:master"
 zls = "latest"
 
+[tasks.venv]
+run = "bash -c 'source .venv/bin/activate'"
+
+[tasks.git-commit]
+run = "git commit -am 'update requirements.txt' && git push"
