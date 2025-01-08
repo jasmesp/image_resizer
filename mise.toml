@@ -7,4 +7,7 @@ zls = "latest"
 run = "bash -c 'source .venv/bin/activate'"
 
 [tasks.git-commit]
-run = "git commit -am 'update requirements.txt' && git push"
+run = "git commit -am 'update requirements.txt' && git push" 
+
+[notes]
+"cool new feature" = "cool new feature"
